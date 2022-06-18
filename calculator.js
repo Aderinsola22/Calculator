@@ -1,16 +1,25 @@
 
 //refactor every function when fully done with logic of calculator
-
+let decimalcount=0;
 function display(id) {
 
 const buttonElement = document.querySelector(`#${id}`);
 const displayElement = document.querySelector("#cal-display");
-
 let displayLength= displayElement.textContent.length;
-   if(displayLength===1 && displayElement.textContent[0]=== "0"){
+if(buttonElement.textContent==="."){
+  decimalcount++;
+}
+
+if(displayLength===1 && displayElement.textContent[0]=== "0" && buttonElement.textContent[0] !="."){
     displayElement.textContent=buttonElement.textContent;
    }
-   else{
+else if(buttonElement.textContent==="." && decimalcount>1){
+  displayElement.textContent +="";
+  displayElement.textContent.trim();
+  decimalcount--;
+   }
+
+else{
     displayElement.textContent+=buttonElement.textContent;    
    }
     
@@ -34,7 +43,12 @@ function del(){
  const displayElement=document.querySelector("#cal-display");
 
  let delText= displayElement.textContent.slice(0,-1);
- if(delText.length ===1 && displayElement.textContent[0]=== "-")
+ if(displayElement.textContent[displayElement.textContent.length-1]===".")
+ {
+   decimalcount--;
+   displayElement.textContent= delText;
+ }
+ else if(delText.length ===1 && displayElement.textContent[0]=== "-")
  {
    clrEntry();
  }
@@ -61,6 +75,7 @@ displayElement.textContent="0";
 }
 //refactor for calculation chaining and result displaying
 function instaCompute(id){
+decimalcount=0;  
 const buttonElement = document.querySelector(`#${id}`);
 const displayElement= document.querySelector("#cal-display");
 const equationElement= document.querySelector("#equation-display");
@@ -97,6 +112,7 @@ function clr(){
  const equationElement= document.querySelector("#equation-display");
  displayElement.textContent= "0";
  equationElement.textContent="";
+ decimalcount=0;
 }
 
 function clrEntry(){
@@ -107,6 +123,7 @@ function clrEntry(){
 
 
 function result(){
+decimalcount=0;  
 const displayElement= document.querySelector("#cal-display");
 const equationElement= document.querySelector("#equation-display");
 const buttonElement= document.querySelector("#button29");
@@ -142,6 +159,7 @@ if(op==="*"){
 }
 //refactor later for advanced displaying of calculations
 function add(op,numerand){
+  decimalcount=0;   
 const displayElement= document.querySelector("#cal-display");
 const equationElement= document.querySelector("#equation-display");
  const floatrand= numerand.map(Number);
@@ -153,6 +171,7 @@ const equationElement= document.querySelector("#equation-display");
 }
 
 function sub(op,numerand){
+  decimalcount=0; 
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
    const floatrand= numerand.map(Number);
@@ -164,6 +183,7 @@ function sub(op,numerand){
 }
 
 function mul(op,numerand){
+  decimalcount=0; 
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
    const floatrand= numerand.map(Number);
@@ -175,6 +195,7 @@ function mul(op,numerand){
 }
 
 function divide(op,numerand){
+  decimalcount=0; 
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
    const floatrand= numerand.map(Number);
@@ -187,12 +208,14 @@ function divide(op,numerand){
 }
 
 function root(displayNum){
+  decimalcount=0; 
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
   displayElement.textContent=Math.sqrt(displayNum).toString(10);
 }
 
 function square(displayNum){
+  decimalcount=0; 
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
   displayElement.textContent=Math.pow(displayNum,2).toString(10);
@@ -200,6 +223,7 @@ function square(displayNum){
 }
 
 function inverse(displayNum){
+  decimalcount=0; 
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
   displayElement.textContent=(1/displayNum).toString(10);
