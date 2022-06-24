@@ -133,32 +133,28 @@ let equate ="";
 equate += equationElement.textContent;
 equate += displayElement.textContent;
 console.log(equate);
-let regexs=["+","-","/","*"];
-let op="";
+
 let numerand="";
-regexs.forEach(regex=>{
-  if(equate.includes(regex)){
-     op= regex; 
-     numerand=equate.split(regex);
-  }
-})
-console.log(op);
-console.log(numerand);
- if(op==="+"){
-  add(op,numerand)
+ if(equate.includes("+")){
+  numerand=equate.split("+");
+  add(numerand)
  }
- if(op==="-"){
-  sub(op,numerand)
+ else if(equate.includes("/")){
+  numerand=equate.split("/");
+  divide(numerand)
 }
-if(op==="/"){
-  divide(op,numerand)
+else if(equate.includes("*")){
+  numerand=equate.split("*");
+  mul(numerand);
 }
-if(op==="*"){
-  mul(op,numerand)
+else if(equate.includes("-")){
+  numerand=equate.split("-");
+  sub(numerand);
 }
+console.log(numerand);
 }
 //refactor later for advanced displaying of calculations
-function add(op,numerand){
+function add(numerand){
   decimalcount=0;   
 const displayElement= document.querySelector("#cal-display");
 const equationElement= document.querySelector("#equation-display");
@@ -170,7 +166,7 @@ const equationElement= document.querySelector("#equation-display");
  displayElement.textContent= sum.toString(10);  
 }
 
-function sub(op,numerand){
+function sub(numerand){
   decimalcount=0; 
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
@@ -182,7 +178,7 @@ function sub(op,numerand){
    displayElement.textContent= sub.toString(10); 
 }
 
-function mul(op,numerand){
+function mul(numerand){
   decimalcount=0; 
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
@@ -194,7 +190,7 @@ function mul(op,numerand){
    displayElement.textContent= product.toString(10); 
 }
 
-function divide(op,numerand){
+function divide(numerand){
   decimalcount=0; 
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
