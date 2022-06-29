@@ -127,13 +127,10 @@ decimalcount=0;
 const displayElement= document.querySelector("#cal-display");
 const equationElement= document.querySelector("#equation-display");
 const buttonElement= document.querySelector("#button29");
-console.log(displayElement.textContent);
-console.log(equationElement.textContent);
+
 let equate ="";
 equate += equationElement.textContent;
 equate += displayElement.textContent;
-console.log(equate);
-
 let numerand="";
  if(equate.includes("+")){
   numerand=equate.split("+");
@@ -148,10 +145,54 @@ else if(equate.includes("*")){
   mul(numerand);
 }
 else if(equate.includes("-")){
+   checkSub(numerand,equate)
+}
+}
+
+function checkSub(numerand,equate){
+  const signIndex=[];
+  for(let i =0;i<equate.length;i++){
+    if(equate[i]==="-"){
+      signIndex.push(i);
+    }
+  }
+  if(signIndex.length===1){
+   numerand=equate.split("-");
+  sub(numerand);
+  }
+ else{
+    doubleNega(numerand,signIndex,equate);
+  }
+}
+
+function doubleNega(numerand,signIndex,equate){
+  const distance= signIndex.reduceRight((total, current) => {
+    return total - current;
+  });
+  let dist= signIndex[signIndex.length-1]-signIndex[signIndex.length-2]
+
+
+  if(signIndex.length===2 && distance===1){
+    equate=equate.replace("-","");
+    equate=equate.replace("-","+");
+    equate=equate.replace(/\s+/g,'');
+    numerand=equate.split("+");
+    add(numerand);
+  }
+  else if(signIndex.length==2 && distance!=1){
   numerand=equate.split("-");
   sub(numerand);
-}
-console.log(numerand);
+  }
+  else if(signIndex.length===3 && dist ===1){
+    equate=equate.replace("-","$");
+    equate=equate.replace("-","");
+    equate=equate.replace("-","+");
+    equate=equate.replace("$","-");
+    equate=equate.replace(/\s+/g,'');
+    numerand=equate.split("+");
+    add(numerand);
+
+  }
 }
 //refactor later for advanced displaying of calculations
 function add(numerand){
@@ -159,7 +200,6 @@ function add(numerand){
 const displayElement= document.querySelector("#cal-display");
 const equationElement= document.querySelector("#equation-display");
  const floatrand= numerand.map(Number);
- console.log(floatrand);
  const sum= floatrand.reduce((total, current) => {
   return total + current;
 }, 0);
@@ -171,7 +211,6 @@ function sub(numerand){
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
    const floatrand= numerand.map(Number);
-   console.log(floatrand);
    const sub= floatrand.reduce((total, current) => {
     return total - current;
   });
@@ -183,7 +222,6 @@ function mul(numerand){
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
    const floatrand= numerand.map(Number);
-   console.log(floatrand);
    const product= floatrand.reduce((total, current) => {
     return total * current;
   }, 1);
@@ -195,7 +233,6 @@ function divide(numerand){
   const displayElement= document.querySelector("#cal-display");
   const equationElement= document.querySelector("#equation-display");
    const floatrand= numerand.map(Number);
-   console.log(floatrand);
    const div= floatrand.reduce((total, current) => {
     return total / current;
   });
