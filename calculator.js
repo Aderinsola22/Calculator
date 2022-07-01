@@ -1,6 +1,9 @@
 
 //refactor every function when fully done with logic of calculator
 let decimalcount=0;
+let equate ="";
+let numerand="";
+let re=/\d+(\+|\-|\*|\/)\d+/
 function display(id) {
 
 const buttonElement = document.querySelector(`#${id}`);
@@ -104,7 +107,6 @@ if(op==="^2"){
 if(op==="1/x"){
   inverse(displayNum);
 }
-
 }
 
 function clr(){
@@ -120,20 +122,28 @@ function clrEntry(){
   displayElement.textContent= "0"; 
 }
 
-
+function test(s) {
+  console.log("%s is valid? %s", s, re.test(s));
+}
 
 function result(){
 decimalcount=0;  
 const displayElement= document.querySelector("#cal-display");
 const equationElement= document.querySelector("#equation-display");
-const buttonElement= document.querySelector("#button29");
 
-let equate ="";
-equate += equationElement.textContent;
-equate += displayElement.textContent;
-let numerand="";
+if(re.test(equationElement.textContent)){
+  equate = equationElement.textContent;
+}
+else{
+  equate = equationElement.textContent;
+  equate += displayElement.textContent; 
+}
+
+console.log(equate)
+
  if(equate.includes("+")){
   numerand=equate.split("+");
+console.log(numerand)
   add(numerand)
  }
  else if(equate.includes("/")){
@@ -262,8 +272,19 @@ function inverse(displayNum){
   displayElement.textContent=(1/displayNum).toString(10);
 }
 
-function percent(displayNum){
-
+function percent(id){
+  const displayElement= document.querySelector("#cal-display");
+  const equationElement= document.querySelector("#equation-display");
+  const buttonElement = document.querySelector(`#${id}`);
+  let perString ="";
+  perString += equationElement.textContent;
+  perString += displayElement.textContent;
+let numerand="";
+  numerand=perString.split(/[+-/*]/);
+  console.log(numerand);
+  perNum=(parseFloat(numerand[0])*parseFloat(numerand[1])/100).toString()
+  displayElement.textContent=perNum;
+  equationElement.textContent+=perNum;
 }
 
 function elementSelectors(id){
