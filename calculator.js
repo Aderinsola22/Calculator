@@ -138,10 +138,7 @@ else{
   equate = equationElement.textContent;
   equate += displayElement.textContent; 
 }
-
-console.log(equate)
-
- if(equate.includes("+")){
+if(equate.includes("+")){
   numerand=equate.split("+");
 console.log(numerand)
   add(numerand)
